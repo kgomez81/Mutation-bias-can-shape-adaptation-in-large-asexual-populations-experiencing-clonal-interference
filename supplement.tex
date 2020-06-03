@@ -95,7 +95,20 @@ The maximum value of $E_s/E_U$ occurs near the transition between the multiple m
 \[
 s_*=f(s_*) = \sqrt{v}\log(Ns_*)^{1/2}.
 \]
-The function $f(s)=\sqrt{v}\log(Ns)^{1/2}$ is a contraction mapping on a bounded interval that includes $s=1$ when $\log(N\sqrt{v})> 1$, and therefore 
+The function $f(s)=\sqrt{v}\log(Ns)^{1/2}$ is a contraction mapping on a bounded closed interval $[\sqrt{v},1]$. In particular, 
+\[
+f([\sqrt{v},1])=[\sqrt{v}\log(N\sqrt{v})^{1/2},\sqrt{v}\log(N)^{1/2}]\subset[\sqrt{v},1]
+\] 
+when $\log(N\sqrt{v})> 1$ and $\sqrt{v}\log(N)^{1/2}<1$. Furthermore, 
+\[
+f'(s) =\frac{\sqrt{v}}{2s\log(Ns)^{1/2}} \leq \frac{1}{2\log(N\sqrt{v})^{1/2}} < 1 \hspace{.5in} \forall s \in [\sqrt{v},1].
+\]
+If we define the sequence $\{s_n\}_{n=1}^{\infty}$ with $s_0=1$ and $s_n=f(s_{n-1})$ for $n\geq1$, then $\lim_{n\rightarrow \infty} s_n = s^*$. The convergence will be much faster approaching with $s_0=1$ because $s^*> \sqrt{v}$, $f([s^*,1]) = [s^*,\sqrt{v}\log(N)^{1/2}]\in [s^*,1]$, and 
+\[
+f'(s) \leq f(s^*)= \frac{v}{2s^*} < \sqrt{v} \hspace{.5in} \forall s \in [\sqrt{v},1].
+\]
+
+If we define the sequence {and therefore 
 \[
 s_*\approx f(f(1))= \sqrt{v}\log(N\sqrt{v}\log(N\sqrt{v})^{1/2})^{1/2}.
 \]
