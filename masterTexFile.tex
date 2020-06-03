@@ -1,0 +1,282 @@
+\documentclass[9pt,twocolumn,twoside]{article}
+\usepackage[paper=a4paper,margin=0.57in]{geometry}% http://ctan.org/pkg/geometry
+\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage[square,numbers]{natbib}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{authblk}
+\usepackage{rotating}
+\usepackage{nameref}
+% \usepackage[useregional]{datetime2}
+\setlength{\rotFPtop}{0pt plus 1fil}
+\setlength\columnsep{.4in}
+\usepackage{tabulary}  
+\usepackage[switch, modulo]{lineno}
+\linenumbers
+
+\makeatletter
+\let\@fnsymbol\@arabic
+\makeatother
+
+\newcommand*\mystrut[1]{\vrule width0pt height0pt depth#1\relax}
+
+\newcommand*\twocell[3]{\begin{tabular}{#1} #2 \\ #3 \end{tabular}}
+\newcommand*\threecell[4]{\begin{tabular}{#1} #2 \\ #3 \\ #4 \end{tabular}}
+\newcommand*\sfn[2]{$#1 \times 10^{#2}$}
+
+\setcounter{secnumdepth}{3}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+    
+\begin{document}
+\title{Mutation bias can shape adaptation in large asexual populations experiencing clonal interference}
+\author[$\ast$]{Kevin Gomez}
+\author[$\dagger$]{Jason Bertram}
+\author[,$\ddagger$]{Joanna Masel \thanks{masel@email.arizona.edu, Dpt. Ecology \& Evolutionary Biology, University of Arizona, 1041 E Lowell St Tucson AZ 85721 USA.}}
+\affil[$\ast$]{Graduate Interdisciplinary Program in Applied Mathematics, University of Arizona}
+\affil[$\dagger$]{Environmental Resilience Institute, Indiana University}
+\affil[$\dagger$]{Department of Biology, Indiana University}
+\affil[$\ddagger$]{Department of Ecology \& Evolutionary Biology, University of Arizona}
+
+% \footnote{Manuscript compiled: \today\\
+% masel@email.arizona.edu, Dpt. Ecology \& Evolutionary Biology, University of Arizona, 1041 E Lowell St Tucson AZ 85721 USA.}
+% \vspace{-11pt}
+
+% -------------------------------------------------------------------------------------------------------
+%\keywords{clonal interference; polygenic adaptation; stochastic processes; trait correlations; life history traits}
+%\runningtitle{Mutation bias and rapid adaptation} % For use in the footer 
+% \runningauthor{FirstAuthorLastname}
+% last names of both authors if there are two authors;
+% \runningauthor{FirstAuthorLastname and SecondAuthorLastname}
+% last name of the first author followed by et al, if more than two authors.
+%\runningauthor{Gomez \textit{et al.}}
+% -------------------------------------------------------------------------------------------------------
+
+\maketitle
+\begin{abstract}
+The Extended Evolutionary Synthesis invokes a role for development in shaping adaptive evolution, which in population genetics terms corresponds to mutation-biased adaptation. Critics have claimed that clonal interference makes mutation-biased adaptation rare. We consider the behavior of two simultaneously adapting traits, one with larger mutation rate $U$, the other with larger selection coefficient $s$, using asexual traveling wave models. We find that adaptation is dominated by whichever trait has the faster rate of adaptation $v$ in isolation, with the other trait subject to evolutionary stalling. Reviewing empirical claims for mutation-biased adaptation, we find that not all occur in the ``origin-fixation'' regime of population genetics where $v$ is only twice as sensitive to $s$ as to $U$. In some cases, differences in $U$ are \textcolor{red}{at least ten to twelve} times larger than differences in $s$\textcolor{red}{, as needed to cause} mutation-biased adaptation even in the ``multiple mutations'' regime. Surprisingly, when $U>s$ in the ``diffusive-mutation'' regime, the required sensitivity ratio is also only two, despite pervasive clonal interference. Given two traits with identical $v$, the benefit of having higher $s$ is surprisingly small, occurring largely when one trait is at the boundary between the origin-fixation and multiple mutations regimes.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+What shapes the course of adaptive evolution? The neo-Darwinian position was that natural selection is pre-eminent; variation is plentiful and appears in gradual increments, providing raw material that natural selection can shape in any way. The idea that biases in the introduction of variation had a significant influence on the course of evolution was mocked as ``the revolt of the clay against the power of the potter'' \citep{Poulton1908}. This selectionist view persisted through the Modern Synthesis \citep{huxley1943evolution}, following the metaphor of populations as vast ``gene pools'' with ample amounts of genetic variation already available for natural selection to act on. With abundant mutations each of tiny effect already present and available to recombine to produce any possible phenotype, bias in variation was thought irrelevant. 
+
+While the influence of mutation bias on neutral evolution was later acknowledged as part of Neutral Theory, selectionism with respect to the course of adaptation is still upheld by advocates for ``Standard Evolutionary Theory'', on the grounds that other evolutionary processes like mutation, drift, and migration, are random with respect to the adaptive direction favored by selection \citep{svensson2019role}. In contrast, advocates for an ``Extended Evolutionary Synthesis'' invoke a significant role for developmental processes \citep{pigliucci2014debate,laland2014does,laland2015}, which shape the phenotypic effects that mutations are more or less likely to have. Exchanges between the two camps have been heated \citep{laland2014does,wray2014does}.
+
+A role for differences in beneficial mutation rates in shaping the nature of adaptations that evolve has been called ``survival of the likeliest'' \citep{mccandlish2014}, or ``first-come-first-served'' \citep{Payne2019}. \textcolor{red}{Here we refer to it as mutation-biased adaptation.} This phenomenon now has substantial empirical support \citep{stoltzfus2019blogPart1}. Evidence for adaptation aligned with mutation bias has been found during the experimental evolution of microvirid bacteriophage \citep{Rokyta2005,sackman2017mutation}, \textit{Escherichia~coli} \citep{Couce2015}, and \textit{Pseudomonas~aeruginosa} \citep{MacLean2010,Stoltzfus2017parallel}. Studies of parallel adaptation in natural populations also reveal patterns suggestive of mutation bias, e.g.~in sodium pump ATP$\alpha$1 adaptations enabling the consumption of glycosine toxins by insects \citep{Stoltzfus2017parallel}, antibiotic resistance in \textit{Mycobacterium tuberculosis} \citep{Payne2019}, and hemoglobin adaptations for high altitude in birds \citep{storz2019role}.
+
+A formal population genetic description of mutation-biased adaptation was given by \citet{yampolsky2001bias} for the case where the product of the beneficial mutation rate $U$ and the population size $N$ is small. In this ``origin-fixation'' or ``strong-selection weak-mutation'' parameter regime, each adaptive mutation is either lost or fixed before the next appears \citep{yampolsky2001bias,mccandlish2014}. Mutations of each kind appear at their own characteristic mutation rate $U$, and fix with probability proportional to the selection coefficient $s$ \citep{haldane_1927}. Differences in mutation rate and differences in selection thus have exactly equal quantitative influence on the flux of adaptive mutations, which is proportional to $UNs$.
+
+\citet{yampolsky2001bias} originally considered a simple sign epistatic landscape of two loci each with two alleles, beginning in a valley, such that mutating to reach one peak precluded reaching the other, and found mutation biased adaptation even when simulating scenarios with $UN>1$. However, sign epistasis is not required to argue on the basis of the sensitivities of the flux of adaptive mutants to $U$ and to $s$ \citep{stoltzfus2019blogPart6}. The theoretical argument for mutation-biased adaptation in this case is, however, strongly dependent on the assumption that the influx of adaptive mutations is small, such that $UN \log(Ns) \ll1$. When two adaptive mutations escape drift to reach appreciable frequencies at the same time, clonal interference will favor the fixation of the one with higher $s$ \citep{Gerrish1998}. For this reason, previous theoretical arguments in favor of mutation-biased adaptation have been restricted to the parameter regime $UN \log(Ns) \ll 1$, and the phenomenon has been criticized on this basis \citep{svensson2019role}. However, clonal interference may occur in at least some of empirically documented cases of mutation-biased adaptation \citep{MacLean2010,miller2011mutational,sackman2017mutation}. There is therefore a need for theory to understand how mutation-biased adaptation might be possible in the presence of clonal interference. 
+
+Models that have previously been used to dismiss mutation-biased adaptation when $UN \log(Ns) \geq 1$ \citep{svensson2019role} are simple, and do not capture the multi-locus complexities included in more recent traveling wave models of population genetics \citep{rouzine2003solitary,desai2007beneficial,park2010speed,hallatschek2011noisy}. Here we build on a recent two-dimensional travelling wave model \citep{gomez2019directional} to formally investigate the circumstances under which mutation-biased adaptation can occur. 
+
+\section{Materials and Methods} \label{sec:materials:methods}
+
+\begin{figure}[!h] 
+\centering
+\includegraphics[scale=.83]{fig_adapt_regimes.pdf}\\
+\caption{\label{fig:distribution} \small Contribution of mutation fluxes to adaptive evolution in three regimes of adaptation: (a) origin-fixation regime, (b) multiple mutations regime, and (c) diffusive-mutation regime. In all three regimes, the mean fitness moves to the right (adaptation) due to selection. In (a) and (b), changes in fitness class abundances are dominated by selection (green arrows). Mutation fluxes are negligibly small by comparison, except at the front (blue arrow) where they have the crucial role of producing new fitter lineages, allowing the travelling fitness wave to continue. In (c), mutation fluxes when $U\gg s$ increase fitness variance throughout the population (blue double-sided arrow).}
+\end{figure}
+
+\subsection{Elasticities} \label{subsec:materials:characterizeMDA}
+
+We quantify the sensitivity of a population's rate of adaptation $v$ to changes in $U$ and $s$ by computing elasticities, a metric in common usage in economics (e.g.~price elasticity) and applied mathematics, but not in evolutionary biology. Elasticity is the percent change in a function's output due to a percent change in its input. Given the function $v(U,s)$, the $U$-elasticity $E_U$ and $s$-elasticity $E_s$ of $v$ are
+\begin{equation} \label{eq:elasticities}
+    E_U = \frac{\Delta_u v / v}{\Delta U / U} \hspace{.5in} E_s = \frac{\Delta_s v / v}{\Delta s / s},
+\end{equation}
+where $\Delta_u v = v(U+\Delta U,s)-v(U,s)$ and $\Delta_s v = v(U,s+\Delta s)-v(U,s)$. The ratio $E_s/E_U$ measures the relative sensitivity of adaptation to selection versus mutation.
+
+Consider the origin-fixation regime (figure~\ref{fig:distribution}a), where the rate of adaptation is 
+\begin{equation} \label{eq:vOF}
+v(U,s)=UN\times \left(\frac{1-(1+s)^{-2}}{1-(1+s)^{-N}}\right) \times s
+\end{equation}
+for a population of size $N$. Here $UN$ is the total influx of beneficial mutations per generation and $[1-(1+s)^{-2}]/[1-(1+s)^{-N}]\approx 2s$ is the fixation probability of each mutation \citep[][Equation 2]{sella2005application}, \textcolor{red}{with the approximation being valid for $s \ll 1$}. Thus, approximately $ UN\times 2s$ mutations are expected to fix in the population each generation, with each increasing relative fitness by $s$, yielding Eq.~\eqref{eq:vOF}. The $U$- and $s$-elasticities of $v$ in the origin-fixation regime are $E_U \approx 1$ and $E_s \approx 2$ since $\Delta_u v/v \approx \Delta U/U$ and $\Delta_s v/v \approx 2\Delta s/s$. The latter expressions follow from applying the first order Taylor approximations 
+\[
+\begin{aligned}
+\Delta_u v \hspace{.2cm}\approx \hspace{.2cm}\frac{\partial v}{\partial U}\Delta U \hspace{.2cm}\approx \hspace{.2cm}N2s^2\Delta U\\[1pt]
+\Delta_s v \hspace{.2cm}\approx \hspace{.2cm}\frac{\partial v}{\partial s} \Delta s \hspace{.2cm}\approx\hspace{.2cm} UN4s\Delta s,
+\end{aligned}
+\]
+and dividing through by $v\approx UN2s^2$.
+
+In the origin-fixation regime, in which there is no interference between the adaptation of different traits, mutation-biased adaptation will occur when relative differences in $U$ ($\Delta U/U$) exceed relative differences in $s$ ($\Delta s/s$) by at least a factor of $E_s/E_U\approx2$. In the two sections below, we present analytical expressions for $v(U,s)$ in two more parameter value regimes, allowing us to apply an elasticity-based analysis to them to identify where the influence of mutation and selection on adaptation rates is comparable.
+
+
+\subsection{Multiple mutations regime analytics}\label{subsec:materials:1danalytics}
+
+When beneficial mutations are more common ($UN \log(Ns) \geq 1$), there is competition among lineages, each of which may have accumulated multiple beneficial mutations. The probability of fixation is then no longer a simple function of the selection coefficient of the focal mutation alone, but instead depends on the presence of other beneficial mutations. The resulting complexities change the relationship between $v$ and the parameters $N$, $U$ and $s$.
+
+In the staircase model (\citealt{Desai2013}; figure~\ref{fig:distribution}b), beneficial mutations appear at rate $U$ per birth and each confer a relative fitness advantage of $s$ (one ``step'' on the staircase). The population is divided into fitness classes that are composed of individuals with the same number of (interchangeable) beneficial mutations, and hence the same fitness.
+
+Populations in the multiple mutations regime ($UN \log(Ns)\geq 1$) will consist of many fitness classes. A traveling fitness wave results from beneficial mutations adding new fitness classes and selection changing genotype frequencies and eventually culling the least fit classes \citep{desai2007beneficial}. A new fitness class appears by mutation at the ``nose'' of the travelling wave, initially populated by few individuals relative to their selective advantage $Q$ over mean population fitness, subject to branching process dynamics dominated by random genetic drift. However, if a new class reaches a size of $n>1/Q$, growth due to selection becomes approximately deterministic. Deterministic classes can be modeled using exponential growth equations, simplifying the analysis of the traveling wave and allowing for efficient numerical simulation as described below in the Subsection \nameref{subsec:materials:simulations}.
+
+Under the assumption that $U\ll s$, Desai and Fisher \citep[][Eq.~41]{desai2007beneficial} obtained
+\begin{equation} \label{eq:vDF}
+v(U,s;N)\approx s^2\frac{\log(N^2sU)}{\log(s/U)}.
+\end{equation}
+\textcolor{red}{In Section 1 of the Supplement we derive the ratio $E_s/E_U$ as:
+}
+\subsection{Diffusive-mutation regime analytics}\label{subsec:materials:dmanalytics}
+
+When $U \gg s$, the mutational fitness flux between neighbouring fitness classes  becomes comparable to the change in fitness class abundance due to selection, breaking down the distinction between deterministic established fitness classes and the stochastic nose. This causes Eq.~\eqref{eq:vDF} to break down.
+
+A useful simplifying assumption in this ``diffusive-mutation'' regime (figure~\ref{fig:distribution}c) is to set the beneficial and deleterious mutation rates equal, so that mutation bias or ``pressure'' \citep{fisher1930genetical,haldane1932causes} alone in the absence of selection does not drive the fitness distribution forward. Mutational steps then follow unbiased random walks with equal chance of reducing or increasing fitness by $s$. The resulting symmetric mutational diffusion process creates fitness variance which selection acts on to drive the wave forward. The diffusion coefficient for this mutational diffusion process is $D=Us^2/2$, because the variance in the position of the mutational walk is $s^2$ per step, and mutations occur at rate $U$. The dependence of $v$ on $U$ and $s$ is then approximately given by \citep[Appendix F in ref][]{hallatschek2011noisy}
+\begin{equation}\label{eq:vHallatschek}
+v(U,s; N) \sim D^{2/3} \log\left(N D^{1/3} \right)^{1/3}. 
+\end{equation}
+Note that due to the logarithmic second term, the rate of adaptation (variance of the fitness distribution) is approximately proportional to $D^{2/3}$. As we will see, this substantially alters the relative roles of mutation and selection, compared to the multiple mutations regime.  
+
+\subsection{Simulations} \label{subsec:materials:simulations}
+
+The analytical, elasticity-based analysis described above considers evolution in one trait only. But when there is clonal interference, i.e.~outside the origin-fixation regime, traits with different $U$ and $s$ do not evolve independently.
+
+We therefore also simulate the simultaneous evolution of two traits ($k=1,2$), with beneficial mutations of fitness effect $s_k$ appearing at rate $U_k$, using an extension of the method of \citet{gomez2019directional}. We consider strong selection relative to population size, such that $1/N \ll s_k \leq 1$. With no pleiotropy or epistasis in this model, Malthusian fitness is $r_{i,j} = i  s_1 + j s_2$ for an individual with $i$ beneficial mutations in trait $k=1$ and $j$ beneficial mutations in trait $k=2$. We group individuals with the same numbers of beneficial mutations into classes denoted by subscripts $(i,j)$, with abundances and frequencies at time $t$ given by $n_{i,j}(t)$ and $p_{i,j}(t)=n_{i,j}(t)/\sum_{i',j'}n_{i',j'}(t)$, respectively. Thus, the selective advantage of an individual in class $(i,j)$ is $Q_{i,j}(t)=r_{i,j}-(\sum_{i,j}n_{i,j}/N)\bar{r}(t)$ where $\bar{r}(t) = \sum_{i,j} p_{i,j}(t) r_{i,j} $ is population mean fitness. Selection according to $Q_{i,j}$ ensures logistic regulation of population size \citep[][page 27]{Crow1970}. The set of abundances forms a two-dimensional distribution in $(i,j)$ space. 
+
+Given abundances $n_{i,j}(t)$ at generation $t$, we calculate the abundances at generation $t+1$ in three steps. First, we calculate the expected change due to selection as 
+\[\tilde{n}_{i,j}(t)=n_{i,j}(t)\frac{Ne^{Q_{i,j}(t)}}{\sum_{i',j'}n_{i',j'}(t)e^{Q_{i',j'}(t)}}.\]
+Second, we determine the expected net flux of mutations $\Delta_u \tilde{n}_{i,j}$ into class $\tilde{n}_{i,j}$. We also include deleterious mutations in our simulation; these occur at the same mutation rate $U_k$ and decrease fitness by $s_k$, yielding
+\[
+\begin{aligned}
+\Delta_u \tilde{n}_{i,j}(t) &= U_1 \left [\tilde{n}_{i-1,j}(t)+\tilde{n}_{i+1,j}(t) \right ] \\
+&+ U_2 \left [\tilde{n}_{i,j-1}(t)+\tilde{n}_{i,j+1}(t)\right] \\
+&-2(U_1 +U_2)\tilde{n}_{i,j}(t)
+\end{aligned}
+\]
+Expected abundances after selection and mutation are $n_{i,j}^*(t) = \tilde{n}_{i,j}(t)+\Delta_u \tilde{n}_{i,j}(t)$.
+In the last step we set abundances of deterministic classes \textcolor{red}{($n_{i,j}^*>10/Q_{i,j}$)} to $n_{i,j}(t+1)=\text{Round}\left [n_{i,j}^*(t) \right]$, while classes that grow stochastically ($n_{i,j}^* \leq 10/Q_{i,j}$) are instead sampled from a Poisson distribution with mean $n_{i,j}^*(t)$. 
+
+We implemented the simulation method described above using Matlab code originally developed by \citet{pearce2019rapid}, modified by \citet{gomez2019directional} to deal with two traits, and here modified to allow those traits to have distinct mutation rates and selection coefficients. When simulating the evolution of one trait for comparison with theoretical predictions for $v(U,s)$ given by Eq.~\eqref{eq:vOF}, Eq.~\eqref{eq:vDF} and Eq.~\eqref{eq:vHallatschek}, we simply set $s_2=0$ and $U_2=0$. We numerically determined $v(U,s)$ values by applying iterative root-finding methods that allow for noise in $v(U,s)$ \citep{kushner2003stochastic}. Time-averages of rates of adaptation were taken over runs lasting 1-2 million generations to ensure convergence, with burn-in periods of 5,000 generations.
+
+Our code ran on Matlab 2016R installed on a desktop computer running Linux. All scripts used to generate our results are available at \url{https://github.com/MaselLab/Gomez_et_al_2020}.
+
+\section{Results} \label{sec: results}
+
+\subsection{Elasticities suggest mutation-biased adaptation in the diffusive-mutation regime} \label{subsec:results:1Dmutdrivadpt}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.44]{fig_v_contours2.pdf}
+\caption{\label{fig:vContour} \small Contour lines of $v(U,s)$ in $U$-$s$ parameter space reveal the possibility of mutation-biased adaptation being just as easy in the diffusive-mutation regime as in the origin-fixation regime. (a) shows distinct $v$ contours and (b) shows contours of the same $v$ given different values of $N$. Regions of $U$-$s$ parameter space in (a) are labeled to indicate where $UN \log(Ns) < 1$ (origin-fixation; aqua blue), $s>U \geq 1/N \log(Ns)$ (multiple mutations; yellow), and $U\geq s$ (diffusive-mutation; neon green). In (b), these regime boundaries are not shown since they depend on $N$.\textcolor{red}{Analytic lines for origin-fixation and multiple mutations regimes continue until the point of their intersection. For the transition between multiple mutations and diffusive mutations, where do lines do not cleanly join, we use dotted lines to indicate inappropriate extrapolation beyond the parameter regime of validity.}}
+\end{figure}
+
+To visualize the relative influence of mutation and selection on the rate of adaptation $v$, we plot contour lines of constant $v(U,s)$ in $U$-$s$ parameter space (figure~\ref{fig:vContour}), as obtained from analytical theory (Section 2.2; colored piecewise curves) and numerical simulations (colored points). The slopes of these contours as shown in log-log space are closely related to the ratio of elasticities $E_s/E_U$, discussed in the Methods as a metric of the relative sensitivities of the adaptation rate to the selection coefficients and appearance rate of beneficial mutations. As shown in the \nameref{sec:appendix}, we have 
+\begin{equation}
+\lim_{\Delta v\rightarrow 0}\frac{E_s}{E_U} = -\frac{s}{U}\frac{d U}{d s}\bigg\rvert_{v(U,s)=\mathrm{constant}}. \label{eq:EsEUslope}
+\end{equation}
+Thus, steeper contours in figure~\ref{fig:vContour} imply that selection has a greater effect on $v$. 
+
+The slopes of the contours depend on which of the three parameter regimes of $U$ and $s$ described in the Methods applies, as shown as background color in figure~\ref{fig:vContour}a for different values of $v$ (figure~\ref{fig:vContour}a) and $N$ (figure~\ref{fig:vContour}b). In the origin-fixation regime (aqua), simulation confirm that $E_s/E_U \approx 2$, as previously obtained analytically. As expected from clonal interference, selection becomes more important ($v$ contours become much steeper, as high as $E_s/E_U \approx 10-12$) in the multiple mutations regime (yellow region, figure~\ref{fig:vContour}a). \textcolor{red}{Generally, the size of $E_s/E_U$ varies in the multiple mutations regime and its upper bound will depend on $N$ and the choice of $v$ contour. Along a specific $v$ contour, the maximum value for $E_s/E_U$ in the multiple mutations regime is}
+\begin{equation}\label{EsEuMultMut}
+\textcolor{red}{\frac{E_s}{E_U} \approx \frac{2}{3} \log(N\sqrt{v}\log^{1/2}(N\sqrt{v}))-\frac{1}{3}}
+\end{equation}
+\textcolor{red}{(see Section 1, Supplement). The dependency of $E_s/E_U$ on $N$ in this parameter region is illustrated in figure~\ref{fig:vContour}b.} 
+
+\begin{figure*}[!ht]
+\centering
+\includegraphics[scale=.4]{fig_two_trait_compare_v.pdf}
+\caption{\label{fig:twotraitcomparison} \small Heat map showing relative rates of adaptation in two simultaneously adapting traits, both of whose values of $U$ and $s$ would in isolation produce the same rate of adaptation $v=5.3\times 10^{-5}$. Axes are labeled by color to show the regime (from figure~\ref{fig:vContour}a) that a trait would be in were it evolving on its own. Darker cell color indicates how much faster the selection-favored trait ($v_1$) evolves relative to the mutation-favored trait ($v_2$). Cell values in the lower left are redundant and not shown, as these would amount to switching trait labels. The fact that ratios are near 1 makes stochasticity difficult to eliminate.}
+\end{figure*}
+
+However, surprisingly --- and in contrast to arguments suggesting that mutation-biased adaptation is impossible with clonal interference \citep{svensson2019role} --- for sufficiently high mutation rates, the steepness of the contour lines declines and we return to $E_s/E_U \approx 2$ (green diffusive-mutation region, figure~\ref{fig:vContour}a). This regime could be thought of as a ``gene flood'' of new mutations, in contrast to the ``gene pool'' analogy of standing genetic variation in the Modern Synthesis. The modest slope is a result of the fact that $v\propto (Us^2)^{2/3}$ (Eq.~\eqref{eq:vHallatschek}). While this differs from origin-fixation formula $v \propto Us^2$, due to the presence of the $2/3$ exponent, the ratio of elasticities for $v \propto (Us^2)^{2/3}$ is nevertheless identical to that of $v \propto Us^2$. We see this by solving for $U$ in $v \propto (Us^2)^{2/3}$, which provides $U \propto v^{3/2} s^{-2}$ \textcolor{red}{(see Section 1 in Supplement, Eq.~(S1.3)).} Applying Eq.~\eqref{eq:elasticities} to $U \propto v^{3/2} s^{-2}$ then provides 
+\[
+\frac{E_s}{E_U} \approx -\frac{s}{v^{3/2}s^{-2}} \left(-2v^{3/2}s^{-3}\right) = 2,
+\]
+as in the origin-fixation regime. 
+
+The origin of the $v\propto D^{2/3}$ dependence in Eq.~\eqref{eq:vHallatschek} can be seen directly from the diffusive nature of mutations in the $U\gg s$ regime. In the bulk of the population, the steady-state abundance $\overline{n}$ of a fitness class with fitness $x$ relative to the population mean changes according the the diffusion equation 
+$\partial \overline{n}(x)/\partial t= D \partial^2 \overline{n}(x)/\partial x^2 + x \overline{n}$. Taking the first moment gives $v = \sigma^2$, where $\sigma$ is the standard deviation in fitness (Fisher's Fundamental Theorem). Similarly, taking the second moment gives $D \propto \int x^3 \overline{n}(x) dx = \mu_3 \sigma^3$ where $\mu_3$ is Pearson's moment coefficient of skewness of the steady-state fitness distribution $\overline{n}(x)$. Therefore, $v \propto (D/\mu_3)^{2/3}$, with a skew factor that depends more weakly on the parameters (Eq.~\eqref{eq:vHallatschek}).
+
+\subsection{Clonal interference creates little bias between two traits of equal $v$} \label{subsec:results:2Dmutdrivadapt}
+
+Our single-trait analysis described above shows the existence of a parameter regime in which the rate of adaptation is sensitive to the mutation rate even in the presence of clonal interference, suggestive of mutation-biased adaptation. But as previously discussed (see \nameref{sec:materials:methods}), clonal interference may alter how differences in $s$ and $U$ shape the course of adaptation, and this must be fully accounted for. 
+
+We do this by simulating the simultaneous evolution of two fitness-associated traits, each of which would on its own evolve at the same rate as the other (\{$s$,$U$\} values corresponding to the purple dots in figure~\ref{fig:vContour}). We then measured the reduction of a trait's rate of adaptation due to clonal interference with the second trait. Specifically, we calculated the rate of adaptation for the higher-$s$ trait $v_1$ and divided it by the rate of adaptation of the higher-$U$ trait $v_2$, and examined how this ratio changed across parameter space (figure~\ref{fig:twotraitcomparison}). A ratio higher than one indicates the degree to which clonal interference makes selection more important than indicated by the one-trait elasticity analysis. When both traits are in the origin-fixation regime, we see $v_1/v_2\approx 1$, as expected in the absence of clonal interference (figure~\ref{fig:twotraitcomparison}; pale color in the aqua blue vs. aqua blue lower right).
+
+Surprisingly, we see even smaller deviations from $v_1/v_2=1$ when both traits fall within the diffusive-mutation regime (pale color in the neon green vs. neon green upper left of figure~\ref{fig:twotraitcomparison} never exceeds $v_1/v_2=1.09$). Our finding of $E_s/E_U\approx 2$ already suggested susceptibility to mutation-biased adaptation; here we see that this persists even when clonal interference is fully accounted for.
+
+Indeed, deviations from $v_1/v_2=1$ are mild throughout, with the highest value of $1.77$ observed when the high-$s$ trait is near the boundary between origin-fixation and multiple-mutation regimes. At this maximum value, adaptation in the mutation-favored trait still accounts for $36\%$ of the total rate of adaptation. Clonal interference thus has a limited ability to block mutation-driven adaptation, beyond that captured by the sensitivity of $v$ to $s$.
+
+\subsection{Evolutionary stalling is driven by differences in $v$ not $s$}
+\label{subsec:results:evolstall}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=.44]{fig_two_trait_compare_v_fixed_s1_U1.pdf}
+\caption{\label{fig:evolutionarystalling} \small The trait with larger $v$ is little affected by clonal interference with another trait, while that with smaller $v$ stalls. The focal trait, shown as a dot, would have the same value of $v_1=5.31\times 10^{-5}$ in each of the three panels, if it were evolving on its own. The focal trait falls into the origin-fixation regime, multiple mutations regime, and diffusive-mutation regime in the top, middle, and bottom panel, respectively. Colors show the extent to which adaptation in the focal trait slows down as a function of the selection coefficient $s_2$ and mutation rate $U_2$ of a second clonally interfering trait. The theoretical $v$ contour for $v=5.31\times 10^{-5}$ from figure~\ref{fig:vContour}a is shown as a black piecewise curve in each panel. $v_1$ transitions from a negligible impact of clonal interference from trait two (dark red region) to having its evolution nearly halted by evolution in trait two (dark blue region). The decline in $v_1$ follows patterns set by $v$-contours, not $s_2$ or $U_2$, indicating that the rate of adaptation of trait two, when evolving independently, determines the decline in $v_1$ from clonal interference between traits. In all panels $N=10^9$.}
+\end{figure}
+
+The previous section shows that two traits with the same independent rate of evolution $v$, but drastically different values of $s$ and $U$, will continue to adapt at similar rates even in the presence of clonal interference. Next we ask how clonal interference operates between two traits that differ not only in their values of $s$ and $U$, but also in their values of $v$. \citet{venkataram2019evolutionary} \textcolor{red}{demonstrated that functional modules can experience ``evolutionary stalling''. Our aim is to explore whether stalling depends only on immediate clonal interference and hence only the relative values of $s$, or whether relative values of $U$ also matter. We note that both change during adaptation due to diminishing returns epistasis and to the depletion of beneficial mutations, respectively.}
+
+To test whether evolutionary stalling occurs, and if so whether the identity of the dominant trait depends on $s$ alone, we quantify how a focal trait's adaptation suffers from clonal interference from a second trait, as a function of that second trait's value of $s$ and $U$ (figure~\ref{fig:evolutionarystalling}). The top, middle, and bottom panels of figure~\ref{fig:evolutionarystalling} show focal traits with the same $v$ taken from the origin-fixation, multiple-mutations, and diffusive-mutation regimes, respectively (open circles). These three panels are striking in their similarity. Adaptation in the focal trait is essentially unaffected by clonal interference from a trait with smaller $v$, but severely affected by a trait with larger $v$. In other words, we see marked evolutionary stalling that depends on $v$. \textcolor{red}{[New formulas should be mentioned here].}
+
+Under a distribution of beneficial effect sizes, adaptation depends on the probability of fixation as a function of $s$, which is dominated by an exponential term $\exp(sT_c)$ involving the expected time to coalescence $T_c$ \citep{good2012distribution,good2014deleterious}. $T_c$ is also the sweep time, and hence closely related to rate of adaptation. In our model, the rate of adaptation is driven by the trait with the largest $v$. Thus, $v$ may simply be an accessible heuristic for a deeper mathematical dependence on $T_c$. The fact that the functional form of the probability of fixation is exponential in $T_c$ explains why the drop in trait one's adaptation shown in figure~\ref{fig:evolutionarystalling} is so dramatic. 
+
+\section{Discussion} \label{sec:discussion}
+
+When two adaptive traits evolve together, adaptation is dominated by whichever has the higher rate of adaptation $v$ in isolation, not by whichever has the higher selection coefficient $s$. If differences in $v$ among fitness-associated traits were dominated by differences in $s$, then this would be a distinction without a difference. But if differences in $U$ are sufficiently large relative to differences in $s$, then mutation-biased adaptation will occur. How much larger differences in $U$ need to be is well summarized using simple equations for the adaptation rate $v$, and depends on which parameter value regime the population is in. For both the origin-fixation regime with $UN \log(Ns) \ll 1$, and the diffusive-mutation regime with $U>s$, differences in $U$ need to be twice as large as differences in $s$. For values of $U$ in the multiple mutations regime between the two, ratios of as much as 10 might be required. Our theoretical calculations in the multiple mutations and diffusive-mutation regime are for the strong linkage disequilibrium produced in asexual microbes --- in the absence of strong linkage disequilibrium in more sexual populations, the origin-fixation regime is likely a good approximation. 
+
+\subsection{Empirical examples}
+
+\begin{table*}[ht!]
+    \centering
+    \includegraphics[scale=0.87]{tab_mut_biased_adapt_exmpls.pdf}
+    \caption{\label{tab:mutDrvAdptExmpls} \footnotesize Empirical examples of mutation-biased adaptation. In \citet{Couce2015}, antibiotic concentrations were titrated to allow proliferation of \textit{E. coli}. The beneficial mutation rate for \citep{Couce2015} was assumed to be 3\% of the total point mutation rate in the mutator strain studied. The population sizes reported for \citet{schober2019two} and \citet{rodrigues2019adaptation} are CFU values calculated from the optical densities ($\text{OD}_{600}$) reported in their papers. We used the formula $\text{CFU}=\text{OD}_{600}\cdot (8 \times 10^8) \cdot \text{volume}$, where volume refers to culture volume (ml) in a turbidostat \citep{schober2019two}, or fresh media volume in 96-well flat-bottom plates \citep{rodrigues2019adaptation}. The factor $8 \times 10^8$ is the scaling constant yielding $\text{CFU/ml}=\text{OD}_{600}\cdot 8 \times 10^8$. \textcolor{red}{Entries in which quantitative ranges for $N$, $s$ and $U$ are not known are assigned a qualitative description (large, small, tiny, etc.) to indicate the logic by which we used their relative sizes to infer which parameter regime applies. Stoltzfus and McCandlish's \cite{Stoltzfus2017parallel} meta-analysis, which examines several natural populations and evolution experiments, is designated as a mixture of origin-fixation and multiple mutations regimes.}}
+\end{table*}
+
+Table~\ref{tab:mutDrvAdptExmpls} summarizes a variety of proposed empirical examples of mutation-biased adaptation. In Table~\ref{tab:mutDrvAdptExmpls} we attempting to quantitatively estimate $N$, $s$ and $U$ where possible, and if not to qualitatively assess which parameter value regime applies, as well as to infer what we can about missing parameter values from the evidence for mutation-biased adaptation. 
+
+Note that many but not all of these argue on the basis of transition : transversion ratio \citep{Stoltzfus2017parallel,Payne2019,sackman2017mutation,Bertels2019}. According to a selection-driven model, in which each mutation is equally likely to be beneficial, adaptive point mutations should have a 1 transition : 2 transversion ratio. However, the mutational spectrum is biased toward transitions, and so an excess of transitions is evidence for mutation-biased adaptation. 
+
+The first two entries in Table~\ref{tab:mutDrvAdptExmpls} are expected to lie in the origin-fixation regime, albeit for different reasons. $N$ is likely reasonably small for the natural bird populations studied by \citet{storz2019role}. While $N$ is much larger for the natural viral populations studied by \citet{Willis2018}, the rate $U$ of the beneficial \textit{de novo} birth of new overlapping genes is likely so low that $UN \ll 1$. There were 5 times more birth events in the +1 reading frame, which has more and longer ORFs, than there were in the +2 reading frame, on which the genetic code bestows a tendency toward the favored protein property of high intrinsic structural disorder. Neither study quantified differences in $U$ or $s$ --- instead, differences in occurrence, i.e. in $v/s$, were counted.
+
+In a meta-analysis of 15 studies (10 natural and 5 experimental) of different taxonomic groups, potentially representing a mixture of origin-fixation and multiple mutations regimes, \citet{Stoltzfus2017parallel} detected a 3-fold excess of transitions among all natural adaptive point mutations, representing a 2-fold excess of unique adaptive mutations, in excess of the expected 1:2 ratio. In experimental cases, 7-fold and 4-fold excesses, respectively were seen.
+
+All the remaining entries in Table~\ref{tab:mutDrvAdptExmpls} involve microbial experimental evolution, which generally takes place in the multiple mutations regime \citep{Levy2015,Good2015,good2017dynamics}, although we are not able in all cases to rule out the possibility that bottlenecks create more of an origin-fixation regime. Given that these studies report large  differences between mutation rates, compatible with $E_s/E_U$ in the range between $2$ and $10$, mutation-biased adaptation can take place even in the multiple mutations regime.
+
+Both \citet{rodrigues2019adaptation} and \citet{schober2019two} examined experimental evolution to recover from a genetic loss, and found it to be mutationally easier to inactivate more loci, rewiring metabolic pathways in the process, than to recover the efficiency of the original pathway. This is mutation-biased adaptation to the detriment of long-term adaptation.
+
+In contrast, Venkataram et al. \citep{venkataram2019evolutionary} partly disabled the translational machinery and then observed the active evolution of this seemingly ``stalled'' complex as it evolved to recover. But as adaptive improvements accumulated, diminishing returns epistasis led to a drop in $s$ to the point that evolution again stalled. This was interpreted in terms of a dominant role for clonal interference and $s$ in determining which modules would undergo adaptation. Our theoretical results support the concept of the stalling of a less-important module, but on the basis of differences in $v$ instead of differences in $s$.
+
+The only candidate for the diffusive-mutation regime in table~\ref{tab:mutDrvAdptExmpls} is Couce et al.'s \citep{Couce2015} experiments with two mutator strains of \textit{E. coli}, i.e.~with artificially high $U$. One mutator strain ($\Delta$mutH) has transition rates 100-300 times larger than wild-type \citep{Cupples1989,Seier2011}, the other ($\Delta$mutT) has transversion rates 500-10,000 times larger than wild-type \citep{Cupples1989,Vidmar2020}. These high mutation rates make $U>s$ and hence the diffusive-mutation regime a possibility, although not certain.
+
+These empirical examples of mutation-biased adaptation collectively span two or even three regimes of adaptation, and in particular, include evolution experiments known to include rampant clonal interference in the multiple mutations regime. Mutation-biased adaptation in this regime requires large mutation bias relative to selective differences. Unsurprisingly, where relative mutation rates have been quantified, biases of appropriate magnitude were found. We can therefore infer in cases where relative mutation rates are not known, but mutation-biased adaptation has been documented in the multiple mutations regime, that similarly large mutation bias must exist. Thus, one reason that mutation-biased adaptation may be more widespread than previously claimed \citep{svensson2019role} is that differences in $U$ can be much larger than differences in $s$. 
+
+\subsection{Variation in $s$}
+
+We have assumed throughout that all beneficial mutations affecting the same trait have the same selection coefficient. \citet{good2012distribution} and \citet{good2014deleterious} have shown that when there is a continuous distribution of fitness effects (DFE), one obtains effective parameters $U^*$ and $s^*$ provided that the beneficial DFE decays faster than exponentially. These effective parameters correspond to the typical beneficial mutations that drive adaptation, and provide expressions $v(U^*,s^*)$ similar in form to Equations \eqref{eq:vOF}-\eqref{eq:vHallatschek}. This suggests that the results of our analysis are also likely to apply using $U^*$ and $s^*$ instead of $U$ and $s$.   
+
+\textcolor{red}{\citet{Hegreness2006}(effective s and U).}
+
+\textcolor{red}{Similarly, \citet{desai2007beneficial} postulated that given a distribution of fitness effects with a tail that decayed faster than exponential, mutations with $s$ having the largest $v(s)$ would dominate adaptation.}
+
+\textcolor{red}{Good et al. 2012 (U influence on characteristic s and U. }
+
+\textcolor{red}{Diminishing returns epistasis makes the magnitude of $s$ a function of the current degree of adaptation \citep{Couce2015a}. Here we model relative fitness, for which the current state of adaptation is not defined \citep{Good2015}. Future work to explore the interplay between evolutionary stalling and diminishing returns epistasis may build on a recent traveling wave framework capturing absolute fitness \cite{bertram2017predicting}.}
+
+\subsection{Deleterious mutations}
+
+For mathematical convenience in the diffusive-mutation regime, we assumed throughout that the deleterious mutation rate is equal to the beneficial mutation rate. In fact, deleterious mutations are much more common. Representing this asymmetry would have no effect on the dynamics of adaptation in the origin-fixation regime. In the other two regimes, assuming symmetry in effect sizes, larger deleterious mutation rates would primarily alter the shape of the traveling wave \citep{desai2007beneficial,fisher2013asexual,good2014deleterious}, rather than alter $v$. Deleterious mutations do contribute to $v$ when their effect sizes are smaller, but do so in a linear manner, resulting in $v=v_b-v_d$ \citep{good2014deleterious}. Our analysis then has its basis in ($v_b$), such that the elasticities we calculate should remain valid. 
+
+\subsection{Conclusion} 
+Both selective advantages $s$ and beneficial mutation rates $U$ determine adaptation rates, which in turn determine which trait will dominate the adaptive process. Differences in $U$ need to be 2 to 10 times as large, depending on the parameter value regime, in order to swamp differences in $s$. Both molecular and developmental biases can create such large differences in $U$, leading to mutation-biased adaptation. Diverse case studies suggest that mutation bias significantly shapes which adaptations occur, even in populations with strong clonal interference. While adaptation does not occur without natural selection, which adaptation occurs among the many possibilities has more complex causes.
+
+\section*{Acknowledgments}
+\label{sec:acknowledgments}
+We thank Benjamin Good for helpful discussions and Arlin Stolzfus \textcolor{red}{and Sergey Kryazhimskiy} for comments on the manuscript. KG, JB, and JM were funded by the National Science Foundation (DEB-1348262), KG by the National Institutes of Health (T32 GM084905) and JB by the Environmental Resilience Institute at Indiana University. 
+
+\footnotesize
+\bibliographystyle{unsrtnat}
+\bibliography{bibliography}
+
+\end{document}
+
+
+

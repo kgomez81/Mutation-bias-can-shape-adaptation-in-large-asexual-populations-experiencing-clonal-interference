@@ -1,0 +1,312 @@
+\documentclass[11pt,onecolumn]{article}
+\usepackage[paper=a4paper,margin=1in]{geometry}% http://ctan.org/pkg/geometry
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage[square,numbers]{natbib}
+\usepackage{url}
+\usepackage{xr}
+\usepackage{xcolor}
+\usepackage{authblk}
+\usepackage[switch, modulo]{lineno}
+\linenumbers
+
+\externaldocument[main-]{masterTexFile}
+
+\newcommand*\mystrut[1]{\vrule width0pt height0pt depth#1\relax}
+\renewcommand{\theequation}{S\thesection.\arabic{equation}}
+
+\title{Mutation bias can shape adaptation in large asexual populations experiencing clonal interference: Supplementary information}
+\author[$\ast$]{Kevin Gomez}
+\author[$\dagger$]{Jason Bertram}
+\author[,$\ddagger$]{Joanna Masel}
+% \author[,$\ddagger$]{Joanna Masel \thanks{masel@email.arizona.edu, Dpt. Ecology \& Evolutionary Biology, University of Arizona, 1041 E Lowell St Tucson AZ 85721 USA.}}
+\affil[$\ast$]{Graduate Interdisciplinary Program in Applied Mathematics, University of Arizona}
+\affil[$\dagger$]{Environmental Resilience Institute, Indiana University}
+\affil[$\dagger$]{Department of Biology, Indiana University}
+\affil[$\ddagger$]{Department of Ecology \& Evolutionary Biology, University of Arizona}
+% \date{May 2020}
+
+\begin{document}
+\maketitle
+% \gdef\thesection{\Alph{section}}
+% \numberwithin{equation}{section}
+
+\section{Calculating $E_s/E_U$ from the slopes of $v$ contours} \label{sec:appendix}
+
+% \subsection*{Appendix A: Relationship between elasticities and the slope of $v$-contours} \label{sec:app:elastVcontours}
+
+Here we derive Eq.~\eqref{eq:EsEUslope}, which states that the derivative of the contour of $v$ gives the ratio of elasticities. Consider the solution $U(s)$ to the equation $v(U(s),s)=v_{c}$ ($v_c$ constant), where Eq.~\eqref{eq:vOF}, Eq.~\eqref{eq:vDF}, and Eq.~\eqref{eq:vHallatschek} give $v(U,s)$ in their respective regimes. Implicit differentiation of both sides of $v(U(s),s)=v_c$ with respect to $s$, and application of the chain rule provides
+\[
+\frac{\partial v}{\partial U } \frac{d U}{d s} + \frac{\partial v}{\partial s } =0.
+\]
+Multiplying this expression by $\frac{(\Delta s)^2}{Uv} \frac{dU}{ds}$ gives 
+\begin{equation} \label{eq:app:implicitElastFull}
+0=
+\left(\frac{\Delta s}{v}\frac{\partial v}{\partial U }\right) \left( \frac{\Delta s}{U}\frac{dU}{ds}\right)+\left(\frac{\Delta s}{v}\frac{\partial v}{\partial s} \right) \left( \frac{\Delta s}{s}\right) \left( \frac{s}{U}\frac{dU}{ds}\right).
+\end{equation}
+For small changes in the selection coefficient $\Delta s$, $\frac{\Delta U}{U} \approx \frac{\Delta s}{U}\frac{d U}{d s}$, and consequently
+\[ 
+\frac{\Delta_u v}{v} \approx \frac{\Delta s}{v}\frac{\partial v}{\partial U} \hspace{.5in} \text{and} \hspace{.5in}\frac{\Delta_s v}{v} \approx \frac{\Delta s}{v} \frac{\partial v}{\partial s}.
+\]
+In addition,
+\begin{equation} \label{eq:app:dUdselasticities}
+\frac{d (\log U)}{d (\log{s})} = \frac{s}{U}\frac{dU}{ds}
+\end{equation}
+also holds, where $\frac{d (\log U)}{d (\log{s})}$ is the slope of the $v$ contour in the $\log(U)-\log(s)$ plane. Substituting for these terms in Eq.~\eqref{eq:app:implicitElastFull} and rearranging provides 
+\[
+-\frac{d (\log U)}{d (\log{s})} = \lim_{\Delta v\rightarrow 0} \frac{\left ( \frac{\Delta_s v}{v}\right)/ \left(\frac{\Delta s}{s} \right) }{\left(\frac{\Delta_u v}{v}\right)/\left( \frac{\Delta U}{U}\right)}.
+\]
+The left side is the slope of a $v$ contour line in $\log U$ vs. $\log s$ space, scaled by $-1$ and evaluated at $s$, while the right side is the ratio $E_s/E_U$ in Eq.~\eqref{eq:EsEUslope}. This establishes Eq.~\eqref{eq:EsEUslope}. It is worth noting that relative changes are approximately equal to changes in the logarithm of a quantity for small changes, eg. $\Delta s/s \approx \Delta \log s$. 
+
+\section{$v$-contours in the multiple mutations and diffusive mutations regimes} \label{sec:supp:paramVcontours}
+
+We first derive parameterizations of $v$ contour lines in the multiple mutations regime analyzed by \citet{desai2007beneficial}. Eq.~(3) for $v(U,s)$ can be rewritten as \[\ell^2+\frac{s^2}{v}\ell-\frac{2v\log(Ns)}{s^2}=0.\]
+where $\ell=\log(s/U)$. The quadratic polynomial in $\ell$ has solutions
+\[ \ell = \frac{s^2}{2v}\left(\pm \sqrt{1+\frac{8v\log(Ns)}{s^2}} -1 \right).\]
+However, the positive root is the correct solution since $\ell = \log(s/U) >0$ when $U/s<1$, as assumed in \cite{desai2007beneficial} and distinguishing the multiple mutations regime from the diffusive mutations regime. Solving for $U$ in 
+\[ \log(s/U) = \frac{s^2}{2v}\left(\sqrt{1+\frac{8v\log(Ns)}{s^2}}-1 \right)\]
+provides the parameterization
+\begin{equation} \label{eq:supp:UparamDF}
+    U(s) = s\exp\left( -\frac{s^2}{2v} \left( \sqrt{1+\frac{8v\log(Ns)}{s^2}}-1\right) \right).
+\end{equation}
+Equation \eqref{eq:supp:UparamDF} allows us to calculate $E_s/E_U$ in the multiple mutations regime by applying Eq.~(5) from the main text. In particular, we have
+\[
+\begin{aligned}
+\lim_{\Delta v\rightarrow 0}\frac{E_s}{E_U} &= -\frac{s}{U(s)}\frac{dU(s)}{ds}\\[4mm]
+& = -\frac{s}{U(s)}\left[\frac{U(s)}{s}+U(s)\cdot\frac{d}{ds}\left( -\frac{s^2}{2v} \left( \sqrt{1+\frac{8v\log(Ns)}{s^2}}-1\right) \right) \right]\\[4mm]
+& = -1+s\left[ \frac{s}{v} \left( \sqrt{1+\frac{8v\log(Ns)}{s^2}}-1\right) +\frac{2}{s} \left( \frac{1-2\log(Ns)}{\sqrt{1+\frac{8v\log(Ns)}{s^2}}}\right)\right]\hspace{1in}\\[4mm]
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+\hspace{.55in} & = -1+\frac{s^2}{v} \left( \sqrt{1+\frac{8v\log(Ns)}{s^2}}-1\right) + \frac{2}{\sqrt{1+\frac{8v\log(Ns)}{s^2}}} \left(1-\frac{2s^2}{v}\cdot\frac{v\log(Ns)}{s^2}\right)
+\end{aligned}
+\]
+The maximum value of $E_s/E_U$ occurs near the transition between the multiple mutations regime and the origin-fixation regime. To calculate this value, we note that in the origin-fixation regime, $v \approx 2NUs^2$ and $NU\log(Ns)\leq 1$. Thus, $U=v/2Ns^2$ and $v\log(Ns)/s^2 \leq 1$ for a fixed value of $v$. The transition between the regimes occurs at $s_*$ where $v\log(Ns_*)/s_*^2 \approx 1$. We can obtain an approximate solution for $s_*$ by solving the equivalent equation
+\[
+s_*=f(s_*) = \sqrt{v}\log(Ns_*)^{1/2}.
+\]
+The function $f(s)=\sqrt{v}\log(Ns)^{1/2}$ is a contraction mapping on a bounded interval that includes $s=1$ when $\log(N\sqrt{v})> 1$, and therefore 
+\[
+s_*\approx f(f(1))= \sqrt{v}\log(N\sqrt{v}\log(N\sqrt{v})^{1/2})^{1/2}.
+\]
+Substituting in $s_*$ and $v\log(Ns_*)/s_*^2 \approx 1$ into our expression for $E_s/E_U$ above yields
+\begin{equation}\label{eq:supp:EsEuMM}
+\lim_{\Delta v\rightarrow 0}\frac{E_s}{E_U} \approx \frac{2}{3}\log(N\sqrt{v}\log(N\sqrt{v})^{1/2})-\frac{1}{3}.
+\end{equation}
+The approximation above implies that at the onset of clonal interference, the relative importance of selection for adaptation grows stronger with larger population size, as can be seen in Figure 2b.\\
+
+To obtain a parameterization for contours of $v(U,s)$ given by Eq.~(4) for the diffusive mutations regime, we can solve for $U$ in an equivalent equation
+\[
+\begin{aligned}
+v\sim \left(\frac{Us^2}{2}\right)^{2/3} \log^{1/3}\left( N \left(\frac{Us^2}{2}\right)^{1/3} \right) \hspace{.2in}& \implies \hspace{.2in} \frac{24v^3}{U^2s^4} \sim  \log \left( \frac{6N^6 v^3 }{\frac{24v^3}{U^2s^4}} \right).\\[3mm]
+\end{aligned}
+\]
+This leads to an expression of the form $w= \log\left(6v^3N^6/{w}\right)$,
+where $w = 24v^3/U^2s^4$. The function $g(w)=\log\left(6v^3N^6/{w}\right)$ is a contraction mapping over a bounded interval containing $w=1$ when $\log(\log(6v^3N^6))>1$, so we can use the same approach above to derive the approximate solution
+\[
+w_* \approx \log \left( \frac{6v^3N^6}{\log (6v^3N^6/\log (6v^3N^6))} \right).
+\]
+We can then solve for $U$ in
+\[
+\frac{24v^3}{U^2s^4} = w_* = \log \left( \frac{6v^3N^6}{\log (6v^3N^6/\log (6v^3N^6))} \right),
+\]
+which leads to 
+\begin{equation} \label{eq:app:UparamHallatschek}
+    U(s) = \frac{1}{s^2}\hspace{.05in}\left ( \frac{2v^{3/2}}{\log \left(N \sqrt{v}/\log \left(N\sqrt[6]{6v^3}\right)\right)^{1/2}} \right).
+\end{equation}
+ 
+
+\section{Expected rates of adaptation for two clonally interfering traits in the multiple mutations regime with distinct mutation rates} \label{sec:app:elastVcontours}
+We derive solutions for $v_i$ ($i=1,2$) of two clonally interfering traits in the multiple mutations regime when the traits have identical selection coefficients, but distinct mutation rates $U_i$. The derivation follows similar steps to those given in Appendix B of \citet{gomez2019directional}, who treated the case where both $s$ and $U$ are identical across the two traits.
+
+We begin by defining an indicator variable $I_{1,i}(l)$ that identifies whether a beneficial mutation $l$ in individual $i$ occurred in trait one. If we consider two individuals, $i$ and $j$, chosen at random from the population, they will each differ by $n_i$ and $n_j$ beneficial mutations from their common ancestor. The mean genetic variance in trait one can then be expressed as
+\[
+\sigma_1^2 = \frac{s^2}{2}E\left[\left(\sum_{l=1}^{n_i}I_{1,i}(l) - \sum_{m=1}^{n_j}I_{1,j}(m) \right)^2\right],
+\]
+where we use the property $\text{var}(X-Y)=2\text{var}(X)$ when $X$ and $Y$ are independent and identically distributed. Expanding the expression provides
+\[
+\begin{aligned}
+\sigma_1^2 &=\frac{s^2}{2}E\left[\left(\sum_{l=1}^{n_i} I_{1,i}(l) - \sum_{l=1}^{n_j} I_{1,j}(l)\right)^2 \right] \\
+\\
+&=\frac{s^2}{2} \left( E\left[ \sum_{l=1}^{n_i} \sum_{m=1}^{n_i} I_{1,i}(l)I_{1,i}(m)\right]+E\left[\sum_{l=1}^{n_j} \sum_{m=1}^{n_j} I_{1,j}(l)I_{1,j}(m) \right] - 2 E\left[\sum_{l=1}^{n_i} \sum_{l=1}^{n_j} I_{1,i}(l) I_{1,j}(m)\right] \right). \\
+&
+\end{aligned}
+\]
+Since beneficial mutations have identical $s$ irrespective of trait, the trait designation is a neutral marker. Conditioning inside the expectation on $n_i$ and $n_j$ results in random variables $\sum_{l=1}^{n_i}I_{1,i}(l)$ and $\sum_{m=1}^{n_j}I_{1,j}(l)$ that have binomial distributions with parameters with $n_i$ and $n_j$, respectively, each with probability $p = U_1/(U_1+U_2)$. This fact allows us to rewrite the expectations above as
+\[
+\begin{aligned}
+\sigma_1^2 &= \frac{s^2}{2}\left( p^2 E\left[ n_i^2+\left(\frac{1-p}{p}\right)n_i\right]+ p^2 E\left[n_j^2+\left(\frac{1-p}{p}\right)n_j \right] - 2 p^2 E\left[ n_i n_j \right] \right) \hspace{0.63in} \\
+\\
+&=p^2 \left(\frac{s^2}{2} E[(n_i-n_j)^2] + \frac{s^2}{2}\frac{1-p}{p}E[n_i+n_j] \right), &
+\end{aligned}
+\]
+As in Gomez et al. \cite{gomez2019directional}, we see that $\frac{s^2}{2} E[(n_i-n_j)^2] = \sigma^2 \approx v(U_1+U_2,s,N)$ by Fisher's Fundamental Theorem, where $v(U,s,N)$ is Desai and Fisher's \citep{desai2007beneficial} result, given as Eq. (3) in our main text. $E[n_i+n_j]=\Pi$ is the average total pairwise heterozygosity at positively selected sites for two randomly selected individuals. Equation 30 in Desai et al. \cite{Desai2013} provides an expression for $\Pi$, derived from the fitness-class coalescent of \cite{Walczak753}. Specifically, we have 
+\[ \Pi = \frac{2v}{s^2}\left( \ln\left(\frac{s}{U_1+U_2}\right) + \frac{s}{\sqrt{\pi \hspace{.01in}v}} \right), \]
+where $v=v(U_1+U_2,N,s)$. Substituting in for these expressions above provides
+\[
+\begin{aligned}
+\sigma_1^2 &= \frac{s^2}{2}\left( p^2 E\left[ n_i^2+\left(\frac{1-p}{p}\right)n_i\right]+ p^2 E\left[n_j^2+\left(\frac{1-p}{p}\right)n_j \right] - 2 p^2 E\left[ n_i n_j \right] \right) \hspace{0.63in} \\[5mm]
+&=p^2 \left(\frac{s^2}{2} E[(n_i-n_j)^2] + \frac{s^2}{2}\frac{1-p}{p}E[n_i+n_j] \right)\\[5mm]
+&=p^2 \left(v + v\frac{1-p}{p} \left( \ln\left(\frac{s}{U_1+U_2}\right) + \frac{s}{\sqrt{\pi \hspace{.01in}v}} \right) \right) \\[5mm]
+&=v\cdot p^2 + vp(1-p) \left( \ln\left(\frac{s}{U_1+U_2}\right) + \frac{s}{\sqrt{\pi \hspace{.01in}v}} \right), 
+\end{aligned}
+\]
+Similar steps to those above can be used to show that
+\[
+\sigma_2^2 = v\cdot (1-p)^2 + vp(1-p)\left( \ln\left(\frac{s}{U_1+U_2}\right) + \frac{s}{\sqrt{\pi \hspace{.01in}v}} \right),
+\]
+by simply starting with indicator variables $I_{2,i}(l)$ and $I_{2,j}(m)$ that identify mutations occurring in trait two, and recognizing that beneficial mutations occur on the second trait with probability $(1-p) = U_2/(U_1+U_2)$. With $\sigma_1^2$ and $\sigma_2^2$ in hand, we can solve for the covariance $\sigma_{12}$ using the relationship $v=v_1+v_2 = (\sigma_1^2+\sigma_{12})+(\sigma_2^2+\sigma_{12})$. Thus, $\sigma_{12} = \frac{1}{2}(v-\sigma_1^2-\sigma_2^2)$, and hence
+\[
+\sigma_{12} = vp(1-p) - vp(1-p)\left(\ln\left(\frac{s}{U_1+U_2}\right) + \frac{s}{\sqrt{\pi \hspace{.01in}v}} \right).
+\]
+Since $v_k = \sigma_k^2+\sigma_{12}$ for $k=1,2$, it follows that  
+\[
+v_1 =vp = \frac{U_1}{U_1+U_2}\cdot v(U_1+U_2,s,N) 
+\]
+and
+\[
+v_2 = v(1-p) = \frac{U_2}{U_1+U_2}\cdot v(U_1+U_2,s,N).
+\]
+We note that for $U_1\gg U_2$,
+\[
+\begin{aligned}
+v(U_1+U_2,s,N) &= \frac{U_1}{U_1+U_2}\cdot v(U_1+U_2,s,N)+\frac{U_2}{U_1+U_2}\cdot v(U_1+U_2,s,N) \\[5mm]
+&\approx \frac{U_1}{U_1+U_2}\cdot v(U_1+U_2,s,N) \\[5mm]
+&\approx v(U_1,s,N)
+\end{aligned}
+\]
+
+\bibliographystyle{unsrtnat}
+\bibliography{bibliography}
+
+\end{document}
+
+% -------------------------------------------------------------------
+% \section{Mutation-selection dynamics in the diffusive mutations regime} \label{sec:app:analysishallatschek}
+
+% \cite{hallatschek2011noisy} models adaptation as a traveling wave whose dynamics are defined as a convection-diffusion process (driven by mutation) with reaction term (driven by selection and drift). At steady state the shape of the traveling wave is determined by a set of coupled ordinary differential equations given by \cite[][Eq.~5 and stationary solution to Eq.~6]{hallatschek2011noisy}
+% \begin{equation} \label{eq:app:HallatschekODEs}
+% \begin{aligned}
+%     v u'(x) =& D u''(x) +x u(x) -2u^2(x)  \\[3pt]
+%     -v \bar{c}'(x) =& D \bar{c}''(x) + \left[x  - 2 u(x) \right]\bar{c}(x) 
+% \end{aligned}
+% \end{equation}
+% where $v$ is the rate of adaptation, $D=Us^2/2$ is the mutational diffusion coefficient \ref{subsec:materials:1danalytics}, $\bar{c}(x)$ is the distribution of abundances over fitness space $x$ relative to a moving frame $vt$, and $u(x)$ is the probability of fixation of a new mutant lineage with relative fitness $x$. Because the solutions must satisfy $\bar{c}(x) \propto u(x) e^{vx/D}$, $u$ can be eliminated from first equation to obtain \citep[Eq.~10][]{hallatschek2011noisy}
+% \begin{equation} \label{eq:app:odeH} \underbrace{\mystrut{2.5ex}-v\bar{c}'(x)}_{\text{wave profile}} \hspace{.2in}= \hspace{.2in}\underbrace{\mystrut{2.5ex} D\bar{c}''(x)}_{\text{mutations}}\hspace{.2in}+\hspace{.2in}\underbrace{\mystrut{2.5ex}x\bar{c}(x) }_{\text{selection}}\hspace{.2in}-\hspace{.2in}\underbrace{\mystrut{3.5ex}\frac{2\bar{c}(x)^2 \exp({\frac{vx}{D}})}{\int_{x'}\bar{c}(x)^2 \exp({\frac{vx}{D}})}}_{\text{drift}}.
+% \end{equation}
+% Rescaling fitness as $X=x/F$ and abundances as $\tilde{c}=\bar{c}/C$ leads to
+% \[ -\left(\frac{vF}{D}\right)\frac{d\tilde{c}}{d X} \hspace{.1in} = \hspace{.1in}\hspace{.1in}\frac{d^2\tilde{c}}{d X^2} \hspace{.1in}+\hspace{.1in}\left(\frac{F^3}{D}\right) X\tilde{c} \hspace{.1in} \hspace{.1in} -\hspace{.1in}\left(\frac{F}{DC}\right)\frac{2\tilde{c}^2 \exp(\frac{vF}{D}X)}{\int_{X'}\tilde{c}^2 \exp(\frac{vF}{D}X')},\]
+
+% \noindent where the coefficient of the diffusion term has been divided through in the expression, and subscripts with $X$ indicate derivatives in the rescaled fitness variable. Letting $F=D^{1/3}$ and $C=D^{-2/3}$, provides the dimensionless equation
+% \begin{equation} 
+% -\tilde{v} \frac{d \tilde{c}}{d X} \hspace{.1in} =\hspace{.1in}\frac{d^2\tilde{c}}{d X^2} \hspace{.1in}+\hspace{.1in} X\tilde{c}\hspace{.1in} -\hspace{.1in}\frac{2\tilde{c}^2 \exp(\tilde{v}X)}{\int_{X'}\tilde{c}^2 \exp(\tilde{v}X')},
+% \end{equation}
+% with the rescaled wave speed $\tilde{v}=vD^{-2/3}$ as the only parameter. Additionally we have re-scaled population size $\tilde{N} = ND^{1/3} = \int_X \tilde{c}(X)dX$.
+
+% \begin{center}
+%     ------ WILL NOT BE INCLUDED IN THE APPENDIX ------
+% \end{center}
+
+% In large populations sizes, the drift term is negligible where abundances are sufficiently large. However, eventually the selection term and drift term balance when abundances become small enough. Following this transition, clonal interference becomes negligible as well. This is readily seen from the fact that for sufficiently large fitness $x$,
+% \[
+% u(x) \approx \frac{x}{2}\hspace{2mm}\frac{1}{1+N(x/2)\exp(-x^2/2v)} \longrightarrow \frac{x}{2}
+% \]
+% Prior to the transition, $\tilde{c}(X)$ will satisfy $-\tilde{v}\tilde{c}_X \approx X \tilde{c}$, neglecting mutational diffusion. Thus, 
+% \[
+% \tilde{c}_L(X) \approx \frac{\tilde{N}}{\sqrt{2\pi \tilde{v}}}\exp \left(- \frac{X^2}{2\tilde{v}} \right).
+% \]
+% to the left of the transition. The onset of balance between drift and selection results in concentration field satisfying $-\tilde{v} \tilde{c}_X = \tilde{c}_{XX}$. Thus, to the right of the transition
+% \[
+% \tilde{c}_R(X) \approx \frac{1}{X_c}\exp \left( -\tilde{v}(X-X_c) \right),
+% \]
+% where $X_c$ marks the transition from $c_L(X)$ to $c_R(X)$ in the profile. The coefficient $1/X_c$ also marks the approximate size -- relative populations size $\tilde{N}$ --- of a class where its growth becomes selection driven. Matching these two solutions by setting $c_L(X_c)=c_R(X_c)$ and $c_L'(X_c)=c_R'(X_c)$ provides
+% \[
+% \begin{aligned}
+% \frac{\tilde{N}}{\sqrt{2\pi \tilde{v}} }\exp \left( -\frac{X_c^2}{2\tilde{v}} \right)= \frac{1}{X_c} \\[3pt]
+% -\frac{X_c}{\tilde{v}}\frac{\tilde{N}}{\sqrt{2\pi \tilde{v}}}\exp \left( -\frac{X_c^2}{2\tilde{v}} \right)= \frac{-\tilde{v}}{X_c}
+% \end{aligned}
+% \]
+% which can be solved for $X_c$ and $\tilde{v}$. We obtain $X_c = \tilde{v}^2$, which leads to 
+% \[
+%  \sqrt{\frac{\tilde{v}^3}{2}}\exp \left( -\frac{\tilde{v}^3}{2} \right)= \frac{\sqrt{\pi}}{\tilde{N}}
+% \]
+% for $\tilde{v}$, using the first equation above. An approximate solution is given by
+% \[
+% \tilde{v} \approx \left[2\log\left(\frac{\tilde{N}}{\sqrt{\pi}}\right)\right]^{1/3}
+% \]
+% Substituting for $\tilde{v}=vD^{-2/3}$ and $\tilde{N}=N D^{1/3}$, and isolating for the original wave speed $v$ provides
+% \[
+% v\approx D^{2/3} \left[2 \log \left(\frac{N D^{1/3}}{\sqrt{\pi}}\right)\right]^{1/3},
+% \]
+% Which is approximately equal to Hallatschek's solution provided as Eq.~\eqref{eq:vHallatschek}. Using the matching procedure with the Airy solution to $-\tilde{v}\tilde{c}_X = \tilde{c}_XX+X\tilde{c}$ as $\tilde{c}_L$ provides a more accurate expression for generating $v$-contours in Figure \ref{fig:vContour}.
+
+% \section{The two-dimensional traveling wave in the diffusive mutation $U\gg s$ regime} \label{sec:app:2dtravelwave}
+
+% In this section we give a heuristic analysis of the traveling wave dynamics with two traits when $U_i \gg s_i$. Following Hallatschek's \citeyearpar{hallatschek2011noisy}, we posit a steady state two-dimensional tuning function $u$ and fitness distributions $\bar{c}$ whose forms are governed by the partial differential equations
+% \begin{equation} \label{eq:app:2dwaveprofile}
+% \begin{aligned}
+% 0 &= \sum_{i=1}^2 D_i \frac{\partial^2u_*(x_1,x_2)}{\partial x_i^2} -v_i \frac{\partial u_*(x_1,x_2)}{\partial x_i} +  x_i u_*(x_1,x_2) - 2u_*(x_1,x_2)^2  \\[10pt]
+% 0 &= \sum_{i=1}^2 D_i \frac{\partial^2\bar{c}(x_1,x_2)}{\partial x_i^2} +v_i \frac{\partial \bar{c}(x_1,x_2)}{\partial x_i} +  x_i\bar{c}(x_1,x_2)  - 2u_*(x_1,x_2)\bar{c}(x_1,x_2) 
+% \end{aligned}
+% \end{equation}
+% where $(x_1,x_2)$ is fitness relative to the time-dependent means $\left(\bar{x}_1(t),\bar{x}_2(t) \right)$. The function $u_*(x_1,x_2)$ (tuning function) gives the probability of fixation for a new mutant lineage with fitness $(x_1,x_2)$. There are now two diffusion constants $D_i = (U_i s_i^2/2)$ for mutations in each trait, and the wave speed in the two dimensional fitness space is $v=v_1+v_2$, one component for each trait.
+
+% Eq.~\eqref{eq:app:2dwaveprofile} can be obtained by considering Hallatschek's \citeyearpar{hallatschek2011noisy} constrained branching random walks (CBRW) over a two-dimensional fitness space. In particular, we consider a concentration field $c(x)$ representing the distribution of abundances and a tuning function $u(x)$ constraining population size, with fitness $x$ is decomposed into components $x=x_1+x_2$ for two fitness-associated traits. In our case, the concentration field $c(x)$ will have dynamics prescribed by a two-dimensional ``evolution'' operator 
+% \[
+% \mathcal{L} = \sum_{i=1}^2 D_i \frac{\partial^2}{\partial x_i^2} +v_i \frac{\partial }{\partial x_i} +  x_i.
+% \]
+% The tuning function will ensures that for all $t$,
+% \[
+% 1=\langle u \hspace{.06in}|\hspace{.06in}c_t \rangle = \iint u(x_1,x_2) c_t(x_1,x_2) d x_1 d x_2.
+% \]
+% Consequently, the stochastic dynamics of the concentration field will obey
+% \[
+% c_{t+e} -c_t = \epsilon \left [(\mathcal{L}-2 u)\hspace{.06in}c_t \hspace{.06in}+\hspace{.06in}\langle c_t \hspace{.06in}|\hspace{.06in} (\mathcal{L}-2 u) \hspace{.06in}u\rangle\hspace{.06in} c_t \right] \hspace{.06in}+\hspace{.06in} \sqrt{\epsilon}\left [\eta \sqrt{2c_t} \hspace{.06in}- \hspace{.06in}\langle u \hspace{.06in}|\hspace{.06in} \eta \sqrt{2c_t} \rangle \hspace{.06in}c_t \right]
+% \]
+% over time-steps $\epsilon$, as described by \cite{hallatschek2011noisy}. Here however, $\eta(x_1,x_2)$ is a standard white noise term over a two dimensional space. In the limit as $\epsilon \rightarrow 0$, the mean concentration field will satisfy  
+% \[
+% \frac{\partial \bar{c}_t}{\partial t} = \left( \mathcal{L}-2u\right)\bar{c}_t - \overline{\langle c_t \hspace{.06in} | \hspace{.06in} (\mathcal{L}^\dagger -2u)\hspace{.06in} u)\rangle \hspace{.02in}c_t},
+% \]
+% where $\mathcal{L}^\dagger$ is the adjoint of $\mathcal{L}$. Choosing $u_*$ to eliminate the non-linear term on the right yields the first equation in \eqref{eq:app:2dwaveprofile}, and it follows that a steady state solution, if it exists, will be given by the second equation. In addition,  
+% \[
+% \bar{c}(x_1,x_2) \propto u_*(x_1,x_2) e^{-\left(\frac{v_1 }{D_1}x_1+\frac{v_2 }{D_2}x_2\right)}
+% \]
+% which leads to equation two in \eqref{eq:app:2dwaveprofile} with  $\bar{c}$
+% \[
+% 0 = \sum_{i=1}^2 \left\{D_i \frac{\partial^2\bar{c}(x_1,x_2)}{\partial x_i^2} +v_i \frac{\partial \bar{c}(x_1,x_2)}{\partial x_i} +  x_i\bar{c}(x_1,x_2) \right \} - \frac{2\bar{c}^2(x_1,x_2) e^{\frac{v_1x_1}{D_1}+\frac{v_2 x_2}{D_2}} }{\iint_{x_1',x_2'} \bar{c}^2(x_1,x_2) e^{\frac{v_1x_1}{D_1}+\frac{v_2 x_2}{D_2}}}
+% \]
+% In vector notation, we have 
+% \[
+% \frac{\partial \bar{c}}{\partial t} = \nabla \cdot (\mathbf{D}\nabla\bar{c})+\mathbf{v}\cdot \nabla\bar{c}+(\mathbf{1}\cdot\mathbf{x})\bar{c}- \frac{2\bar{c}^2 e^{\mathbf{\gamma}\cdot\mathbf{x}}}{\iint \bar{c}^2 e^{\mathbf{\gamma}\cdot\mathbf{x}'}}
+% \]
+
+% \noindent by taking the second equation in Eq.~\eqref{eq:app:2dwaveprofile}. Integrating the second equation, provides 
+% \begin{align*}
+% \sum_{i=1}^2 v_i \iint \frac{\partial \bar{c}}{\partial x_i} d x_1 d x_2 = \sum_{i=1}^2 \iint D_i \frac{\partial^2\bar{c}(x_1,x_2)}{\partial x_i^2} d x_1 d x_2 + \sum_{i,j=1}^2 \iint (x_i  - u_*)x_j\bar{c} d x_1 d x_2 
+% \end{align*}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.43]{fig_two_trait_compare_sU_log_v1dv.pdf}
+%     \includegraphics[scale=0.43]{fig_two_trait_compare_sU_log_1mv1dv.pdf}
+%     \caption{Two versions of figure 3 on a log10 scale. On the left is $\log(v1/v)$, and on the right is $\log(1.0000001 - v1/v)$. The darker spots are simulations that didn't run long-enough. Evolution isn't halted but it takes a large window of time to sample the average $v_1$.}
+%     \label{fig:my_label}
+% \end{figure}
+% \newpage
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=0.43]{fig_two_trait_compare_sU_transitions.pdf}
+%     \caption{Curves showing $v_1/v$ as a function of $\log_{10}(s_2)$ with $U_2$  fixed (red curves), and $v_1/v$ as a function of $\log_{10}(U_2)$ with $s_2$ fixed (blue curves). Values of $v_1/v$ are those shown in panel (b) of Figure 3, and show that $v_1/v$}
+%     \label{fig:my_label}
+% \end{figure}
